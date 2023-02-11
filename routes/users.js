@@ -5,11 +5,12 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
+// const bcrypt = require('bcrypt');
 
-router.get('/', (req, res) => {
-  res.render('users');
-}); 
+router.get("/", (req, res) => {
+  res.render("users");
+});
 
 module.exports = router;

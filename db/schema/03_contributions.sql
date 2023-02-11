@@ -1,0 +1,8 @@
+CREATE TABLE contributions (
+  id SERIAL PRIMARY KEY NOT NULL,
+  message TEXT,
+  contributor_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  accepted BOOLEAN NOT NULL DEFAULT FALS,
+  upvote INTEGER NOT NULL,
+  downvote INTEGER NOT NULL
+)
