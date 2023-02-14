@@ -7,10 +7,35 @@
 
 const express = require("express");
 const router = express.Router();
-// const bcrypt = require('bcrypt');
+const { getUsers, getUserById } = require('../db/queries/users');
 
+const bcrypt = require('bcrypt');
+
+
+// --------------- Work in progress (13/02)
+
+// router.get("/", (req, res) => {
+//   getUsers()
+//     .then((users) => {
+//       res.send({users});
+//     })
+//     .catch((err) => console.log("getUsers ERROR", err))
+// });
+
+
+
+// ------- 
 router.get("/", (req, res) => {
-  res.render("users");
+  res.render("register");
 });
+
+
+
+router.post("/", (req, res) => {
+  console.log('________', req.body)
+  res.redirect("/")
+  return
+})
+
 
 module.exports = router;
