@@ -5,6 +5,7 @@ require("dotenv").config();
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
+var path    = require('path');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -33,6 +34,7 @@ const widgetApiRoutes = require("./routes/widgets-api");
 const usersRoutes = require("./routes/users");
 const registerRoutes = require("./routes/register");
 const loginRoutes = require("./routes/login");
+const storyRoutes = require("./routes/story_create_routes")
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -42,6 +44,7 @@ app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
 app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
+app.use("/create", storyRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
