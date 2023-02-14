@@ -1,4 +1,4 @@
-const  getStory  = require('../db/queries/stories');
+
 const createStoryElement = function (storyObj) {
   const $story = $(` <div class="main-div">
       <div class="each-story">
@@ -16,7 +16,13 @@ const renderStoryElements = function (stories) {
 };
 
 $(() => {
-  $(".main-div").click(function () {
-    renderStoryElements(getStory.getStory());
-  });
+
+  const loadStories = function (){
+    $.get('/story-api',function (data){
+      renderStoryElements(data)});
+  }
+  loadStories();
+
+
+
 });
