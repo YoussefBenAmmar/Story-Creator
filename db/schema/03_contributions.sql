@@ -1,8 +1,9 @@
 CREATE TABLE contributions (
   id SERIAL PRIMARY KEY NOT NULL,
-  message TEXT,
+  message TEXT NOT NULL,
   contributor_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  accepted BOOLEAN NOT NULL DEFAULT FALS,
+  story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
+  accepted BOOLEAN NOT NULL DEFAULT FALSE,
   upvote INTEGER NOT NULL,
   downvote INTEGER NOT NULL
-)
+);

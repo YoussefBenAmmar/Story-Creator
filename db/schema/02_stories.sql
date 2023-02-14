@@ -3,10 +3,11 @@ CREATE TABLE stories (
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
 
   title VARCHAR(100) NOT NULL,
-  thumbnail_photo_url VARCHAR(255) NOT NULL,
+  image_url VARCHAR(255) NOT NULL,
   body TEXT,
-  creation_date DATE NOT NULL,
-  completion_date DATE NOT NULL,
+  creation_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  completion_date TIMESTAMP NOT NULL DEFAULT NULL,
   completed BOOLEAN NOT NULL DEFAULT FALSE,
-  genre VARCHAR(255) NO NULL
+  genre VARCHAR(255) NOT NULL,
+  upvotes INTEGER
 )
