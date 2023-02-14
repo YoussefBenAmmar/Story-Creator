@@ -32,11 +32,7 @@ app.use(express.static("public"));
 const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
 const usersRoutes = require("./routes/users");
-<<<<<<< HEAD
-// const registerRoutes = require("./routes/register");
-=======
 const registerRoutes = require("./routes/register");
->>>>>>> 8e6f5c3ef7f712c3384ab733ce059c97a5d61768
 const loginRoutes = require("./routes/login");
 const storyRoutes = require("./routes/story_create_routes")
 
@@ -46,11 +42,7 @@ const storyRoutes = require("./routes/story_create_routes")
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
-<<<<<<< HEAD
-// app.use("/register", registerRoutes);
-=======
 app.use("/register", registerRoutes);
->>>>>>> 8e6f5c3ef7f712c3384ab733ce059c97a5d61768
 app.use("/login", loginRoutes);
 app.use("/create", storyRoutes);
 // Note: mount other resources here, using the same pattern above
