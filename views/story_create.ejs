@@ -15,17 +15,18 @@
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
   <script src="/scripts/story_create_form.js"></script>
+  <!-- <script src="/routes/story_create_routes.js"></script>
+  <script src="/routes/login.js"></script> -->
   
 </head>
 <!-- style="height:1200px;font-size:14pt;" -->
 <body>
   <h1>Create your story!🥔</h1>
   <p id="oldentry">Previous entry here</p>
-  <!--  -->
-  <form name="writingform" action="/create/read" method="post"> 
+  <!-- action="/create/read" method="post" -->
+  <form id="writingform"> 
     <input type="text" name="title" placeholder=" Title here ">
     <textarea  name="story" placeholder="Write your story here"></textarea>
-    <button>Create!</button>
     <!-- add if statement here -->
     <input type="submit" value="Submit">
   </form>

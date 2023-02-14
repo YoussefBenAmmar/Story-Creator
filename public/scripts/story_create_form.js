@@ -1,5 +1,7 @@
 //const storyq = require("db/queries/story_queries");
 
+//const { addStory } = require("../../db/queries/stories");
+
 //const { json } = require("express");
 
 const generateRandomString = function () {
@@ -21,22 +23,29 @@ $(document).ready(()=>{
 
   $('#oldentry').text("previous entry here");
  
-  $(document).find("form").on('submit',function(event) {
+  $("#writingform").on('submit',function(event) {
     event.preventDefault();
     console.log("abc");
-    
-    
-    console.log(JSON($(this).serialize()));
+    const data = $(this).serialize();
+    console.log(data);
+    //addStory()
+    $.post("/api/stories",data)
+      .then(res =>{
+        console.log(res);
+      })
 
-    $.ajax({
-      url:`/create`,
-      method:"POST",
-      data : $(this).serialize(),
-      success : (ev) => {
-       console.log($(this).serialize());
-       $writing.value = "";
-      }
-    }); 
+
+
+    // $.ajax({
+    //   url:`/create`,
+    //   method:"POST",
+    //   data : $(this).serialize(),
+    //   datatype: JSON,
+    //   success : (ev) => {
+    //    console.log($(this).serialize());
+    //    $writing.value = "";
+    //   }
+    // }); 
 
   })
 

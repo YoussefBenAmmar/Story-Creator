@@ -31,21 +31,33 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
+const storyApiRoutes = require("./routes/stories-api");
 const usersRoutes = require("./routes/users");
-const registerRoutes = require("./routes/register");
+//const registerRoutes = require("./routes/register");
 const loginRoutes = require("./routes/login");
-const storyRoutes = require("./routes/story_create_routes")
+//const storyRoutes = require("./routes/story_create_routes")
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
+app.use("/api/stories", storyApiRoutes);
 app.use("/users", usersRoutes);
-app.use("/register", registerRoutes);
+//app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
-app.use("/create", storyRoutes);
+//app.use("/api/stories", storyRoutes);
 // Note: mount other resources here, using the same pattern above
+
+
+//this belongs in a render file exmp :pages.js
+app.get("/create", (req, res) => {
+  console.log("hi there");
+  res.render("story_create");
+  //res.redirect(`/${id}`);
+});
+
+
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -54,6 +66,9 @@ app.use("/create", storyRoutes);
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
