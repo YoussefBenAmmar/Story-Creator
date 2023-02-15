@@ -17,15 +17,17 @@ router.get('/', (req, res) => {
 });
 
 router.post("/", (req,res) => {
-  addStory(obj);
-  res.send({status:true});
-
+  addStory(res);
+  //res.send({status:true});
+  res.redirect()
 })
 
 // This part (with id )is for contribution
 router.get('/:id', (req, res) => {  
+  const obj = {title:"weeee",body:"someotherstory in another work", id : req.params[0]}
   const notfuond = false;
-  const obj = {title:"weeee",body:"someotherstory", id : req.params[0]}
+  //const story = getStoriesById(req.params.id);
+  //console.log(story);
   if (notfuond){
     res.sendStatus(404);
   }

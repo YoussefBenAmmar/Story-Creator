@@ -1,8 +1,4 @@
-//const storyq = require("db/queries/story_queries");
-
-//const { addStory } = require("../../db/queries/stories");
-
-//const { json } = require("express");
+const cookieSession = require('cookie-session');
 
 const generateRandomString = function () {
   let result = [];
@@ -19,47 +15,58 @@ $(document).ready(() => {
   const counter = document.getElementsByName("counter")[0];
   const show = document.getElementById("show");
   prevwork = document.getElementById("oldentry");
+  new_workID = generateRandomString();
   const oldwork = document.location.href.split("/")
   let number = 140
+  $(show).hide();
+  $('#oldentry').hide();
+  
 
-  //if the story is continuation
-
-  //checks to see if the url 
+  //checks to see if the url has story id, if it does that means its a contribution
   if (oldwork.length > 4) {
-    $.get("/api/stories")
+    console.log("oldwork length target ", oldwork[4])
+    $.get(`/api/stories/${oldwork[4]}`)
       .then(res => {
+        console.log(res.params)
+        $('#oldentry').show();
         $('#oldentry').text(res.body);
-      }).catch(err =>{})
-  } else { //probably need to remove this else.
-    $('#oldentry').remove();
+        $(show).show();
+      }).catch(err =>{console.log("there was a error",err.message);})
   }
 
 
+  //this is the submit form. where we send what we have to the database
   $("#writingform").on('submit', function (event) {
     event.preventDefault();
     console.log("abc");
     const data = $(this).serialize();
+    data['user_id'] = cookieSession.user_id;
     console.log(data);
 
     //if the url contains id, then submit as contribution
     if (oldwork.length > 4) {
-      $.post(`/api/stories/${oldwork[4]}`, data)
+      $.post(`/create/${oldwork[4]}`, data)
       .then(res => {
+        // should be window.location.href = "/read/${oldwork}"
+        window.location.href = res.redirect;
         console.log(res);
       })
+
     } else {
-      $.post("/api/stories", data)
+      //submit it as a new work from the story_create_routes
+      $.post(`/create/${new_workID}`, data)
       .then(res => {
-        console.log(res);
+        //should be window.location.href = "/read/${newwork}"
+        window.location.href = "/login";
+        //console.log(res);
       })
     }
 
   })
 
-
+  //shows previous entry
   $(show).on('click', function (event) {
     event.preventDefault();
-    console.log("shoooowwww");
     $('#oldentry').slideToggle("slow");
   });
 
