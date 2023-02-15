@@ -22,7 +22,6 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   console.log('________', req.body)
 
-  addUpvote(req.session.user_id)
 
   res.redirect("/")
   return

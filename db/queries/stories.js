@@ -76,14 +76,14 @@ const completedStories = (story_id) => {
  */
 const getContributions = (id) => {
   const queryString = `
-    SELECT stories.id, stories.title, stories.body, contributions.message, contributions.accepted,
-    contributions.id, users.name, count(upVotes.contribution_id)
+    SELECT stories.id, stories.title, contributions.message, contributions.accepted,
+    contributions.id, users.name, count(upVotes.contribution_id) as upVote
     FROM contributions
     JOIN users ON users.id = user_id
     RIGHT JOIN stories ON stories.id=story_id
     FULL OUTER JOIN upVotes ON contributions.id = contribution_id
     WHERE stories.id = $1
-    GROUP BY upVotes.contribution_id, stories.id, stories.title, stories.body,
+    GROUP BY upVotes.contribution_id, stories.id, stories.title,
     contributions.message, contributions.accepted, users.name, contributions.id
     ORDER BY contributions.accepted;
   `
@@ -111,8 +111,18 @@ const addContributions = (contributions) => {
     .catch((err) => console.log('addContributions ERROR', err));
 };
 
-const addUpvote = () => {};
+const addUpvote = (contribution_id, name_id) => {
+  const queryString = `INSERT INTO upVotes (contribution_id, name_id)
+  VALUES ($1, $2)
+  RETURNING *;`
+  return db.query(queryString, [contribution_id, name_id])
+};
 
-const getUpvotes = () => {};
+const getUpvotes = (contribution_id) => {
+  const queryString = `
+  SELECT count(*) FROM upVotes
+  WHERE contribution_id = $1;`
+  return db.query(queryString, [contribution_id])
+};
 
-module.exports = { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes }
+module.exports = { getStories, getStoriesById, addStory, getContributions, completedStories, addContributions, addUpvote, getUpvotes }

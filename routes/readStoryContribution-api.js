@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes } = require ('../db/queries/stories');
+const { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, getContributions } = require ('../db/queries/stories');
 
 
 
@@ -9,12 +9,11 @@ const { getStories, getStoriesById, addStory, completedStories, addContributions
 // });
 
 router.get("/", (req, res) => {
-  getStories()
-    .then((stories) => {
-      res.json(stories);
+  getContributions(2)
+    .then((contributions) => {
+      res.json(contributions);
     })
-    .catch((err) => console.log("getStories ERROR", err))
-
+    .catch((err) => console.log("getContributions ERROR", err))
 
 
 

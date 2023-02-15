@@ -34,6 +34,7 @@ const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 const readRoutes = require("./routes/readStory");
 const readStoriesRouteApi = require("./routes/readStories-api");
+const readStoriesContr = require("./routes/readStoryContribution-api");
 
 
 
@@ -46,6 +47,8 @@ app.use("/users", usersRoutes);
 app.use("/login", loginRoutes);
 app.use("/readStory", readRoutes);
 app.use("/api/readStory", readStoriesRouteApi);
+app.use("/api/readStoryContr", readStoriesContr);
+
 
 // Note: mount other resources here, using the same pattern above
 
