@@ -1,27 +1,42 @@
 /*
- * All routes for Widget Data are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /api/widgets
+ * All routes for stories Data are defined here
+ * Since this file is loaded in server.js into api/stories,
+ *   these routes are mounted onto /api/stories
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
 const express = require('express');
 const router  = express.Router();
 const db = require('../db/connection');
+const {addStory, getStoriesById} = require("../db/queries/stories")
 
+//This part is for new stories.
 router.get('/', (req, res) => {
- console.log("test");
- res.send({status:true});
+ const obj = {title:"weeee",body:"pieeeee", id : req.params[0]}
+ res.send(obj);
 });
 
 router.post("/", (req,res) => {
-  const title = req.body.title;
-  const story = req.body.story;
-  const obj = {title,story}
-  console.log(req.body);
-  //addStory(obj);
+  addStory(obj);
   res.send({status:true});
 
 })
+
+// This part is for contribution
+router.get('/:id', (req, res) => {  
+  const notfuond = false;
+  const obj = {title:"weeee",body:"pieeeee", id : req.params[0]}
+  if (notfuond){
+    res.sendStatus(404);
+  }
+  res.send(obj);
+})
+
+router.post('/:id', (req, res) => {  
+  const obj = {title:"weeee",body:"pieeeee", id : req.params[0]}
+  res.send(obj);
+})
+
+
 
 module.exports = router;
