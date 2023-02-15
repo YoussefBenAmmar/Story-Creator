@@ -27,7 +27,7 @@ const getStoriesById = (id) => {
   SELECT stories.*, users.name, contributions.message,
   contributions.accepted
   FROM stories
-  JOIN users ON users.id = stories.owner_id
+  JOIN users ON users.id = stories.user_id
   JOIN contributions ON contributions.id = story_id
   WHERE stories.id = $1
   `
@@ -47,12 +47,12 @@ const getStoriesById = (id) => {
 const addStory = function (story) {
   const queryString = `
   INSERT INTO stories
-    (owner_id, body, title, image_url, creation_date, completed, complition_date)
+    (user_id, body, title, image_url, creation_date, completed, complition_date)
   VALUES ($1, $2, $3, $4, NOW(), FALSE, NULL)
   RETURNING *;
   `;
 
-  const values = [story.owner_id, story.body, story.title, story.image_url]
+  const values = [story.user_id, story.body, story.title, story.image_url]
   return db.query(queryString, values)
     .then(res => {
       return res.rows[0];
@@ -79,7 +79,7 @@ const getContributions = (id) => {
     SELECT stories.id, stories.title, stories.body, contributions.message, contributions.accepted,
     contributions.id, users.name, count(upVotes.contribution_id)
     FROM contributions
-    JOIN users ON users.id = contributor_id
+    JOIN users ON users.id = user_id
     RIGHT JOIN stories ON stories.id=story_id
     FULL OUTER JOIN upVotes ON contributions.id = contribution_id
     WHERE stories.id = $1
@@ -115,5 +115,4 @@ const addUpvote = () => {};
 
 const getUpvotes = () => {};
 
-const getIncompleteStories = () => {};
-
+module.exports = { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes }

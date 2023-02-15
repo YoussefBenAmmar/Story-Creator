@@ -5,8 +5,13 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
+
+const express = require("express");
+const router = express.Router();
+const { getUsers, getUserById } = require('../db/queries/users');
+
+const bcrypt = require('bcrypt');
+
 
 // -------
 router.get("/", (req, res) => {
@@ -20,12 +25,6 @@ router.post("/", (req, res) => {
   res.redirect("/")
   return
 })
-
-const express = require("express");
-const router = express.Router();
-const { getUsers, getUserById } = require('../db/queries/users');
-
-const bcrypt = require('bcrypt');
 
 
 // --------------- Work in progress (13/02)
