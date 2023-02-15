@@ -22,10 +22,10 @@ router.post("/", (req,res) => {
 
 })
 
-// This part is for contribution
+// This part (with id )is for contribution
 router.get('/:id', (req, res) => {  
   const notfuond = false;
-  const obj = {title:"weeee",body:"pieeeee", id : req.params[0]}
+  const obj = {title:"weeee",body:"someotherstory", id : req.params[0]}
   if (notfuond){
     res.sendStatus(404);
   }
@@ -33,7 +33,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/:id', (req, res) => {  
-  const obj = {title:"weeee",body:"pieeeee", id : req.params[0]}
+  const obj = {title:"s",body:"someotherstory", id : req.params[0]}
   res.send(obj);
 })
 

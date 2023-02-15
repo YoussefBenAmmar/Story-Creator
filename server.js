@@ -35,7 +35,7 @@ const storyApiRoutes = require("./routes/stories-api");
 const usersRoutes = require("./routes/users");
 //const registerRoutes = require("./routes/register");
 const loginRoutes = require("./routes/login");
-//const storyRoutes = require("./routes/story_create_routes")
+const storyRoutes = require("./routes/story_create_routes");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -46,18 +46,9 @@ app.use("/api/stories", storyApiRoutes);
 app.use("/users", usersRoutes);
 //app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
-//app.use("/api/stories", storyRoutes);
+app.use("/create",storyRoutes);
+
 // Note: mount other resources here, using the same pattern above
-
-
-//this belongs in a render file exmp :pages.js
-app.get("/create", (req, res) => {
-  console.log("hi there");
-  res.render("story_create");
-  //res.redirect(`/${id}`);
-});
-
-
 
 // Home page
 // Warning: avoid creating more routes in this file!
