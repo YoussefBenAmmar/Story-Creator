@@ -8,9 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <!-- <link rel="stylesheet" href="public/styles/main.css" />
-  <link rel="stylesheet" href="public/styles/layout.css" /> <---- gotta add a specific css here -->
+  <!-- <link rel="stylesheet" href="/vendor/border-box.css" /> -->
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" /> 
+  <!-- <---- gotta add a specific css here -->
+  <link rel="stylesheet" href="/styles/create.css"/>
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -19,19 +21,23 @@
   <script src="/routes/login.js"></script> -->
   
 </head>
-<!-- style="height:1200px;font-size:14pt;" -->
+
 <body>
-  <h1>Create your story!🥔</h1>
   <p id="oldentry">Previous entry here</p>
-  <!-- action="/create/read" method="post" -->
-  <form id="writingform"> 
-    <input type="text" name="title" placeholder=" Title here ">
-    <textarea  name="story" placeholder="Write your story here"></textarea>
-    <!-- add if statement here -->
-    <input type="submit" value="Submit">
-  </form>
   <button type="button" id="show">Show previous entry</button>
+  <h1>Create your story!🥔</h1>
+  
+  <!-- action="/create/read" method="post" -->
+  <form id="writingform">
+    <div id = info> 
+    <input type="text" id="title" name="title" placeholder=" Title here ">
+    <textarea  name="story" placeholder="Write your story here"></textarea>
+  </div>
+    <input type="submit" id="submitbtn" value="Submit">
+  </form>
   <label name="counter">0</label>
+  
+  
 </body>
 
 </html>
