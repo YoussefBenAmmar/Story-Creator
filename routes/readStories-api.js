@@ -4,25 +4,13 @@ const { getStories, getStoriesById, addStory, completedStories, addContributions
 
 
 
-// router.get("/", (req, res) => {
-//   res.render("readStory");
-// });
 
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
   getStories()
     .then((stories) => {
       res.json(stories);
     })
     .catch((err) => console.log("getStories ERROR", err))
-
-
-
-
-  // addUpvote()
-  //   .then((upVote) => {
-  //     res.json(upVote)
-  //   })
-  //   .catch((err) => console.log("addUpvote ERROR", err))
   });
 
 

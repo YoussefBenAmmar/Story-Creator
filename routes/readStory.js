@@ -4,19 +4,12 @@ const { getStories, getStoriesById, addStory, completedStories, addContributions
 
 
 
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+  console.log("id :", id);
   res.render("readStory");
+  
 });
-
-// router.get("/", (req, res) => {
-//   getStories()
-//     .then((stories) => {
-//       // const templateVars = { stories: stories, user: req.session.user_id };
-//       res.json(stories[0].body);
-//     })
-//     .catch((err) => console.log("getStories ERROR", err))
-
-//   });
 
 
 router.post("/", (req, res) => {

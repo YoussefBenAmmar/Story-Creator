@@ -28,6 +28,13 @@ const loadStories = function () {
   });
 };
 
+const loadSpecific = function (id) {
+  $.get(`/api/readStory/${id}`, function (data) {
+
+    renderStoryElements(data);
+  });
+};
+
 // ----------------- CONTRIBUTIONS
 
 const createContrElement = function (contrObj) {
@@ -51,8 +58,8 @@ for (element of contribution) {
     $(".contributions").append(eachContr);
 };
 
-const loadContr = function () {
-  $.get("/api/readStoryContr", function (data) {
+const loadContr = function (id) {
+  $.get(`/api/readStoryContr/${id}`, function (data) {
     // console.log(data);
     // console.log(data[0].title);
     // console.log(data[0].message);
@@ -70,6 +77,13 @@ const vote = function () {
 };
 
 $(() => {
+  const currentwork = document.location.href.split("/")
+  if(currentwork.length > 4) {
+    console.log(currentwork);
+    console.log("current work id is",currentwork[4]);
+    loadSpecific(currentwork[4]);
+  }
+
 
    $(".main-div").click(function (event) {
     event.preventDefault();
@@ -80,7 +94,7 @@ $(() => {
   $(".contributions").click(function (event) {
     // console.log("contribution", loadContr())
     event.preventDefault();
-    loadContr();
+    loadContr(currentwork[4]);
   });
 
   // $(".upButton").click(function (event) {
