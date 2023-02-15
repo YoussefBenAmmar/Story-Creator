@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 router.post('/', (req, res) => {
   req.session.password =req.body.password;
-  req.session.userid = req.body.userid;
+  req.session.user_id = req.body.user_id;
   res.redirect('/')
 })
 

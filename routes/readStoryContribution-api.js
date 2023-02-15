@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, getContributions } = require ('../db/queries/stories');
+const { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, getContributions, publish } = require ('../db/queries/stories');
+
+
 
 router.get("/:id", (req, res) => {
   getContributions(req.params.id)
@@ -18,7 +20,22 @@ router.get("/", (req, res) => {
     .catch((err) => console.log("getContributions ERROR", err))
   });
 
+  router.post("/:id/upvote", (req, res) => {
+    // addUpvote (req.params.id, req.session.user_id)
+    addUpvote (req.params.id, 2)
+      .then((vote) => {
+        res.json(vote);
+      })
+      .catch((err) => console.log("addUpvote ERROR", err))
+  });
 
+  router.get("/:id/upvote", (req, res) => {
+    getUpvotes (req.params.id)
+      .then((vote) => {
+        res.json(vote);
+      })
+      .catch((err) => console.log("getUpvotes ERROR", err))
+  });
 
 
   module.exports = router;

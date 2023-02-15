@@ -8,6 +8,7 @@ const createStoryElement = function (story) {
       <div class="story">
         <h1>${story[0].title}</h1>
         <p>${story[0].body}</p>
+        <button class='publish' value = "submit"> Publish 🔐 </i> </button>
       </div>
     `);
   return $story;
@@ -43,8 +44,9 @@ const createContrElement = function (contrObj) {
       <div class="contribution">
         <h1>${contrObj[0].name}</h1>
         <p>${contrObj[0].message}</p>
-        <p>${contrObj[0].upvote}</p>
-
+        <p id='upvote_${contrObj[0].id}'>${contrObj[0].upvote}</p>
+        <button class='upButton'  value="submit" data-attribute-upvoteid='${contrObj[0].id}' > upvote 🆙 </i> </button>
+        <button class='accept' value = "submit"> Accept Contribution ✅ </i> </button>
       </div>
     `);
   return $contribution;
@@ -56,6 +58,13 @@ for (element of contribution) {
 }
     const eachContr = createContrElement(contribution);
     $(".contributions").append(eachContr);
+
+    $(".upButton").click(function(event) {
+      event.preventDefault();
+      const id = $(event.target).attr("data-attribute-upvoteid")
+      vote(id);
+
+    })
 };
 
 const loadContr = function (id) {
@@ -70,11 +79,24 @@ const loadContr = function (id) {
 
 // --------------- VOTING
 
-const vote = function () {
-  $.get("/api/readStory", function (data) {
-
+const vote = function (id) {
+  $.post(`/api/readStoryContr/${id}/upvote`, function (data) {
+    $.get(`/api/readStoryContr/${id}/upvote`, function(data){
+      $(`#upvote_${id}`).text(data);
+    })
   });
 };
+
+
+// ------------- PUBLISH
+
+const publish = function(story_id) {
+
+}
+
+
+
+
 
 $(() => {
   const currentwork = document.location.href.split("/")
@@ -91,16 +113,28 @@ $(() => {
   });
 
 
-  $(".contributions").click(function (event) {
+  $(".contribution-button").click(function (event) {
     // console.log("contribution", loadContr())
     event.preventDefault();
     loadContr(currentwork[4]);
   });
 
-  // $(".upButton").click(function (event) {
+
+
+  // $(',complete').on('click', (event) => {
   //   event.preventDefault();
+  //   // $form.hide(300);
 
+  //   return $.ajax({
+  //     method: 'PUT',
+  //     url: `/api/readStory/${storyId}`
+  //   }).then((res) => {
+  //     if (res.redirect) {
+  //       window.location.assign(res.redirect);
+  //     } else {
+  //       location.reload(true);
+  //     }
+  //   });
   // });
-
-
 });
+

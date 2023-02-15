@@ -111,11 +111,11 @@ const addContributions = (contributions) => {
     .catch((err) => console.log('addContributions ERROR', err));
 };
 
-const addUpvote = (contribution_id, name_id) => {
-  const queryString = `INSERT INTO upVotes (contribution_id, name_id)
+const addUpvote = (contribution_id, user_id) => {
+  const queryString = `INSERT INTO upVotes (contribution_id, user_id)
   VALUES ($1, $2)
   RETURNING *;`
-  return db.query(queryString, [contribution_id, name_id])
+  return db.query(queryString, [contribution_id, user_id])
 };
 
 const getUpvotes = (contribution_id) => {
@@ -125,4 +125,10 @@ const getUpvotes = (contribution_id) => {
   return db.query(queryString, [contribution_id])
 };
 
-module.exports = { getStories, getStoriesById, addStory, getContributions, completedStories, addContributions, addUpvote, getUpvotes }
+
+const publish = (story_id) => {
+  const queryString = `UPDATE stories SET completed = TRUE WHERE id = $1;`
+  return db.query(queryString, [story_id])
+}
+
+module.exports = { getStories, getStoriesById, addStory, getContributions, completedStories, addContributions, addUpvote, getUpvotes, publish }
