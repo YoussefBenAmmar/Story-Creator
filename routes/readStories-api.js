@@ -14,7 +14,9 @@ router.get("/:id", (req, res) => {
   });
 
 
-
+  router.post("/:id/publish", (req, res) => {
+    res.redirect
+  })
   // router.post('/:id/published', (req, res) => {
   //   getStories()
   //   .then((stories) => {

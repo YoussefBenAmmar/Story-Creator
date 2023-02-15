@@ -91,7 +91,7 @@ const vote = function (id) {
 // ------------- PUBLISH
 
 const publish = function(story_id) {
-
+  $.post()
 }
 
 
@@ -119,6 +119,11 @@ $(() => {
     loadContr(currentwork[4]);
   });
 
+
+  $(".publish").click(function (event){
+    event.preventDefault();
+
+  })
 
 
   // $(',complete').on('click', (event) => {
