@@ -1,29 +1,21 @@
 // Client facing scripts here
 
-
-
 // ------------- MAIN STORY ///public button was moved out of the story
-const createStoryElement = function (story, id) {
+const createStoryElement = function (story) {
   const $story = $(`
       <div class="story">
         <h1>${story[0].title}</h1>
-        <p>${story[0].body}</p> 
+        <p>${story[0].body}</p>
       </div>
       <button class='publish' value = "submit"> Publish 🔐 </i> </button>
     `);
   return $story;
 };
 const renderStoryElements = function (story) {
-  console.log("story", story)
-  
+  console.log("story", story);
 
-    const eachStory = createStoryElement(story);
-    $(".main-div").append(eachStory);
-    
-
-  
-
-
+  const eachStory = createStoryElement(story);
+  $(".main-div").append(eachStory);
 };
 
 const loadStories = function () {
@@ -34,7 +26,6 @@ const loadStories = function () {
 
 const loadSpecific = function (id) {
   $.get(`/api/readStory/${id}`, function (data) {
-
     renderStoryElements(data);
   });
 };
@@ -42,13 +33,13 @@ const loadSpecific = function (id) {
 // ----------------- CONTRIBUTIONS
 
 const createContrElement = function (contrObj) {
-  console.log("contrObj", contrObj)
+  console.log("contrObj", contrObj);
   const $contribution = $(`
       <div class="contribution">
-        <h1>${contrObj[0].name}</h1>
-        <p>${contrObj[0].message}</p>
-        <p id='upvote_${contrObj[0].id}'>${contrObj[0].upvote}</p>
-        <button class='upButton'  value="submit" data-attribute-upvoteid='${contrObj[0].id}' > upvote 🆙 </i> </button>
+        <h1>${contrObj.name}</h1>
+        <p>${contrObj.message}</p>
+        <p id='upvote_${contrObj.id}'>${contrObj.upvote}</p>
+        <button class='upButton'  value="submit" data-attribute-upvoteid='${contrObj.id}' > upvote 🆙 </i> </button>
         <button class='accept' value = "submit"> Accept Contribution ✅ </i> </button>
       </div>
     `);
@@ -56,35 +47,34 @@ const createContrElement = function (contrObj) {
 };
 
 const renderContrElements = function (contribution) {
-for (element of contribution) {
-  console.log("individual contributions :", element);
-}
-    const eachContr = createContrElement(contribution);
+  console.log(contribution);
+  for (element of contribution) {
+    console.log("individual contributions :", element);
+    const eachContr = createContrElement(element);
     $(".contributions").append(eachContr);
+  }
 
-    $(".upButton").click(function(event) {
-      event.preventDefault();
-      const id = $(event.target).attr("data-attribute-upvoteid")
-      vote(id);
-
-    })
+  $(".upButton").click(function (event) {
+    event.preventDefault();
+    const id = $(event.target).attr("data-attribute-upvoteid");
+    vote(id);
+  });
 };
 
 const loadContr = function (id) {
   $.get(`/api/readStoryContr/${id}`, function (data) {
     renderContrElements(data);
   });
-
-}
+};
 
 // --------------- VOTING
 
 const vote = function (id) {
   $.post(`/api/readStoryContr/${id}/upvote`, function (data) {
-    $.get(`/api/readStoryContr/${id}/upvote`, function(data){
-      console.log("data here is",data.rows[0].count);
+    $.get(`/api/readStoryContr/${id}/upvote`, function (data) {
+      console.log("data here is", data.rows[0].count);
       $(`#upvote_${id}`).text(data.rows[0].count);
-    })
+    });
   });
 
   // $.post(`/api/readStoryContr/${id}/upvote`).then(
@@ -96,40 +86,32 @@ const vote = function (id) {
   //     )
   //   }
   // )
-
-
-
 };
-
 
 // ------------- PUBLISH
 
-const publish = function(story_id) {
-  $.post()
-}
-
+const publish = function (story_id) {
+  $.post(`${story_id}/publish`).then((res) => {
+    window.location.assign(`/publish/${story_id}`);
+  });
+};
 
 //-------- Contribute
 
-const contribute = function (id){
+const contribute = function (id) {
   //console.log("contribute button is clicked");
   window.location.assign(`/create/${id}`);
-  $.post(`/create/${id}`).then(
-    res => {
-      
-    }
-  )
-}
-
+  $.post(`/create/${id}`).then((res) => {});
+};
 
 $(() => {
-  const button2 = `<button class='contri'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>`
+  const button2 = `<button class='contri'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>`;
   $("body").append(button2);
 
-  const currentwork = document.location.href[document.location.href.length-1]
-  if(currentwork) {
+  const currentwork = document.location.pathname.split("/")[2];
+  if (currentwork) {
     console.log(currentwork);
-    console.log("current work id is",currentwork);
+    console.log("current work id is", currentwork);
     loadSpecific(currentwork);
   }
 
@@ -139,33 +121,27 @@ $(() => {
   //   loadStories();
   // });
 
-
   $(".contribution-button").click(function (event) {
-    const currentwork = document.location.href[document.location.href.length-1]
-    $('.contributions').empty();
+    const currentwork = document.location.pathname.split("/")[2];
+    $(".contributions").empty();
     event.preventDefault();
     loadContr(currentwork);
   });
 
-
-  $(".publish").click(function (event){
+  $(".publish").click(function (event) {
     event.preventDefault();
+  });
 
-  })
-
-  $(".contribute").click(function (event){
-    const currentwork = document.location.href[document.location.href.length-1]
+  $(".contribute").click(function (event) {
+    const currentwork =
+      document.location.href[document.location.href.length - 1];
 
     event.preventDefault();
     contribute(currentwork);
-  })
+  });
 
   //outside of main-div which works.
-  $('.contri').on( 'click',function (event) {
+  $(".contri").on("click", function (event) {
     window.location.replace(`/create/${currentwork}`);
-
-  })
-
-
+  });
 });
-

@@ -24,10 +24,10 @@
   <body>
     <p id="oldentry">Previous entry here</p>
     <button type="button" id="show">Show previous entry</button>
-    <h1>Create your story!🥔</h1>
+    <h1>Create Contribution</h1>
 
     <!-- action="/create/read" method="post" -->
-    <form action="/create" method="post" id="writingform">
+    <form action="/create/contribute/<%= id %>" method="post" id="writingform">
       <div id="info">
         <input type="text" id="title" name="title" placeholder=" Title here " />
         <textarea name="body" placeholder="Write your story here"></textarea>

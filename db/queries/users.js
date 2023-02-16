@@ -1,22 +1,19 @@
-const db = require('../connection');
-const express = require('express');
-const { response } = require('express');
-const router  = express.Router();
+const db = require("../connection");
+const express = require("express");
+const { response } = require("express");
+const router = express.Router();
 
 const getUsers = () => {
-  return db.query('SELECT * FROM users;')
-    .then(res => {
-      return res.rows;
-    });
+  return db.query("SELECT * FROM users;").then((res) => {
+    return res.rows;
+  });
 };
 
-
 const getUserById = (id) => {
-  return db.query("SELECT * FROM users WHERE id = $1;", [id])
-  .then(res => {
-    return res.rows[0]
-  })
-}
+  return db.query("SELECT * FROM users WHERE id = $1;", [id]).then((res) => {
+    return res.rows[0];
+  });
+};
 
 const getUsersStoriesByUserId = (id) => {
   const queryString = `
@@ -26,10 +23,20 @@ const getUsersStoriesByUserId = (id) => {
   WHERE users.id = $1
   `;
 
-  return db.query(queryString, [id])
+  return db.query(queryString, [id]).then((res) => {
+    return response.rows;
+  });
+};
+const getUserByEmail = (email) => {
+  return db
+    .query("select * from users where users.email = $1", [email])
     .then((res) => {
-      return response.rows;
+      return res.rows[0];
     });
 };
-
-module.exports = { getUsers, getUserById, getUsersStoriesByUserId };
+module.exports = {
+  getUsers,
+  getUserById,
+  getUsersStoriesByUserId,
+  getUserByEmail,
+};

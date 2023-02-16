@@ -1,24 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { getUsers, getUserById } = require('../db/queries/users');
-const bcrypt = require('bcrypt');
-const cookieSession = require('cookie-session');
-
-router.use(cookieSession({
-  name: 'session',
-  keys: ['purple-tiger-machine-facing-grapefruit-is-impossible-to-be-too-hot-to-handle'],
-}));
+const {
+  getUserByEmail,
+  getUsers,
+  getUserById,
+} = require("../db/queries/users");
+const bcrypt = require("bcrypt");
 
 router.get("/", (req, res) => {
   res.render("login");
 });
 
-
-router.post('/', (req, res) => {
-  req.session.password =req.body.password;
-  req.session.user_id = req.body.user_id;
-  res.redirect('/')
-})
+router.post("/", (req, res) => {
+  console.log(req.body);
+  getUserByEmail(req.body.email).then((user) => {
+    req.session.user_id = user.id;
+    res.redirect("/");
+  });
+});
 
 // Log out:
 router.post("/logout", (req, res) => {

@@ -5,10 +5,19 @@ require("dotenv").config();
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
-var path    = require('path');
+var path = require("path");
+const cookieSession = require("cookie-session");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [
+      "purple-tiger-machine-facing-grapefruit-is-impossible-to-be-too-hot-to-handle",
+    ],
+  })
+);
 
 app.set("view engine", "ejs");
 
@@ -38,7 +47,6 @@ const readRoutes = require("./routes/readStory");
 const readStoriesRouteApi = require("./routes/readStories-api");
 const readStoriesContr = require("./routes/readStoryContribution-api");
 
-
 //const registerRoutes = require("./routes/register");
 const storyRoutes = require("./routes/story_create_routes");
 const storyApi = require("./routes/index-api");
@@ -59,7 +67,7 @@ app.use("/api/readStory", readStoriesRouteApi);
 app.use("/api/readStoryContr", readStoriesContr);
 
 //app.use("/register", registerRoutes);
-app.use("/create",storyRoutes);
+app.use("/create", storyRoutes);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -70,9 +78,6 @@ app.use("/create",storyRoutes);
 // app.get("/", (req, res) => {
 //   res.render("index");
 // });
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
