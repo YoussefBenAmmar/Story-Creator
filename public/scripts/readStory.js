@@ -83,9 +83,23 @@ const loadContr = function (id) {
 const vote = function (id) {
   $.post(`/api/readStoryContr/${id}/upvote`, function (data) {
     $.get(`/api/readStoryContr/${id}/upvote`, function(data){
-      $(`#upvote_${id}`).text(data);
+      console.log("data here is",data.rows[0].count);
+      $(`#upvote_${id}`).text(data.rows[0].count);
     })
   });
+
+  // $.post(`/api/readStoryContr/${id}/upvote`).then(
+  //   res =>{
+  //     $.get(`/api/readStoryContr/${id}/upvote`).then(
+  //       data=>{
+  //         $(`#upvote_${id}`).text(data.upvote);
+  //       }
+  //     )
+  //   }
+  // )
+
+
+
 };
 
 
@@ -129,6 +143,7 @@ $(() => {
 
   $(".contribution-button").click(function (event) {
     // console.log("contribution", loadContr())
+    $('.contributions').empty();
     event.preventDefault();
     loadContr(currentwork[4]);
   });
@@ -151,20 +166,5 @@ $(() => {
   })
 
 
-  // $(',complete').on('click', (event) => {
-  //   event.preventDefault();
-  //   // $form.hide(300);
-
-  //   return $.ajax({
-  //     method: 'PUT',
-  //     url: `/api/readStory/${storyId}`
-  //   }).then((res) => {
-  //     if (res.redirect) {
-  //       window.location.assign(res.redirect);
-  //     } else {
-  //       location.reload(true);
-  //     }
-  //   });
-  // });
 });
 

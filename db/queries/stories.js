@@ -48,12 +48,12 @@ exports.getStoriesById = getStoriesById;
 const addStory = function (story) {
   const queryString = `
   INSERT INTO stories
-    (user_id, body, title, creation_date, completed, complition_date)
-  VALUES ($1, $2, $3, NOW(), FALSE, NULL)
+    (user_id, body, title, creation_date, completed)
+  VALUES ($1, $2, $3, NOW(), FALSE)
   RETURNING *;
   `;
 
-  const values = [story.owner_id, story.body, story.title]
+  const values = [story.user_id, story.body, story.title]
   return db.query(queryString, values)
     .then(res => {
       return res.rows[0];
@@ -82,7 +82,7 @@ const getContributions = (id) => {
     SELECT stories.id, stories.title, stories.body, contributions.message, contributions.accepted,
     contributions.id, users.name, count(upVotes.contribution_id)
     FROM contributions
-    JOIN users ON users.id = contributor_id
+    JOIN users ON users.id = user_id
     RIGHT JOIN stories ON stories.id=story_id
     FULL OUTER JOIN upVotes ON contributions.id = contribution_id
     WHERE stories.id = $1
@@ -135,4 +135,4 @@ const publish = (story_id) => {
 }
 
 
-module.exports = { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, publish }
+module.exports = { getStories, getContributions , getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, publish }

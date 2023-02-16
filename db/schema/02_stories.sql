@@ -1,6 +1,4 @@
 DROP TABLE IF EXISTS stories CASCADE;
-
-
 CREATE TABLE stories (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
@@ -10,7 +8,6 @@ CREATE TABLE stories (
   body TEXT,
   creation_date TIMESTAMP DEFAULT NOW(),
   completed BOOLEAN DEFAULT FALSE,
-  genre VARCHAR(255),
   upvotes INTEGER
 
   -- title VARCHAR(100) NOT NULL,

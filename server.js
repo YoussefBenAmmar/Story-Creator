@@ -41,10 +41,14 @@ const readStoriesContr = require("./routes/readStoryContribution-api");
 
 //const registerRoutes = require("./routes/register");
 const storyRoutes = require("./routes/story_create_routes");
+const storyApi = require("./routes/index-api");
+const story = require("./routes/index");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
+app.use("/index/api", storyApi);
+app.use("/", story);
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
 app.use("/api/stories", storyApiRoutes);
@@ -56,15 +60,16 @@ app.use("/api/readStoryContr", readStoriesContr);
 
 //app.use("/register", registerRoutes);
 app.use("/create",storyRoutes);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 
 

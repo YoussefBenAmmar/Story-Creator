@@ -11,12 +11,12 @@ router.get("/:id", (req, res) => {
 
 });
 
-router.get("/:id/published", (req, res) => {
-  const id = req.params.id;
-  console.log("id :", id);
-  res.render("readStory");
+// router.get("/:id/published", (req, res) => {
+//   const id = req.params.id;
+//   console.log("id :", id);
+//   res.render("readStory");
 
-});
+// });
 
 
 

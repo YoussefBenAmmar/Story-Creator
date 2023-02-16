@@ -27,16 +27,6 @@ router.post('/:id', (req, res) => {
   )
 })
 
-router.post('/', (req, res) => {  
-  console.log("this is the story create story without id",)
-  addStory(databack).then(
-    datadone => { 
-      res.send({storyid:databack.user_id})
-    }
-  )
-})
-
-
 router.post('/contribute/:id', (req, res) => {  
   console.log("this is the story create new contribution part",)
   addContributions(res).then(
@@ -45,6 +35,17 @@ router.post('/contribute/:id', (req, res) => {
     }
   )
 })
+
+router.post('/', (req, res) => {  
+  console.log("this is the story create story without id",)
+  addStory(res).then(
+    datadone => { 
+      res.send({storyid:datadone.user_id})
+    }
+  )
+})
+
+
 
 
 module.exports = router;

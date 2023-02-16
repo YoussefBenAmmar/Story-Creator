@@ -11,22 +11,22 @@ const generateRandomString = function () {
 }
 
 $(document).ready(() => {
-  const area = document.getElementsByName("story")[0];
+  const area = document.getElementsByName("body")[0];
   const counter = document.getElementsByName("counter")[0];
   const show = document.getElementById("show");
   prevwork = document.getElementById("oldentry");
   new_workID = generateRandomString();
-  const oldwork = document.location.href.split("/")
+  const oldwork = document.location.href[document.location.href.length-1];
   let number = 140
   $(show).hide();
   $('#oldentry').hide();
   
 
   //checks to see if the url has story id, if it does that means its a contribution
-  if (oldwork.length > 4) {
+  if (!isNaN(oldwork)) {
     console.log("oldwork length target ", oldwork[4])
     console.log(oldwork);
-    $.get(`/api/readStory/${oldwork[4]}`)
+    $.get(`/api/readStory/${oldwork}`)
       .then(res => {
         console.log(res);
         $('#oldentry').show();
@@ -43,23 +43,26 @@ $(document).ready(() => {
     data['user_id'] = 1;
     //data['user_id'] = cookieSession.user_id;
     console.log(data);
+    
 
     //if the url contains id, then submit as contribution
-    if (oldwork.length > 3) {
-      $.post(`/create/contribute/${oldwork[4]}`, data)
+    if (isNaN(oldwork)) {
+      $.post(`/create`, data)
+      .then(res => {
+        data['completed'] = false;
+        console.log(res.url);
+        ///readStory/${res.storyid}
+        window.location.assign(`/`)
+      })
+    } else {
+      $.post(`/create/contribute/${oldwork}`, data)
       .then(res => {
         data['completed'] = false;
         console.log(res.url);
         window.location.assign(`/readStory/${res.storyid}`)
       })
-    } else {
     //submit it as a new work from the story_create_routes
-    $.post(`/create`, data)
-    .then(res => {
-      data['completed'] = false;
-      console.log(res.url);
-      window.location.assign(`/readStory/${res.storyid}`)
-    })}
+   }
   })
 
   //shows previous entry
