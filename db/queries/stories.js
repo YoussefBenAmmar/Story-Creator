@@ -5,4 +5,11 @@ const getStory = () => {
     return response.rows;
   });
 };
-module.exports = { getStory };
+const getStoryById = (id) => {
+  return db
+    .query(`select * from stories where name = '${id}'`)
+    .then((response) => {
+      return response.rows;
+    });
+};
+module.exports = { getStory, getStoryById };

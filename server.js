@@ -44,7 +44,7 @@ app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
 app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
-app.use("/story-api", storyApi);
+app.use("/index/api", storyApi);
 app.use("/", story);
 // Note: mount other resources here, using the same pattern above
 

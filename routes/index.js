@@ -11,8 +11,12 @@ router.get("/", (req, res) => {
   //   .catch((err) => {
   //     res.status(500).json({ error: err.message });
   //   });
-  res.render("index")
-
+  res.render("index");
 });
+// router.post("/", (req, res) => {
+//   const data = req.body.search;
+
+//   res.send(data);
+// });
 
 module.exports = router;
