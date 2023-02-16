@@ -3,14 +3,13 @@
 
 
 // ------------- MAIN STORY ///public button was moved out of the story
-const createStoryElement = function (story) {
+const createStoryElement = function (story, id) {
   const $story = $(`
       <div class="story">
         <h1>${story[0].title}</h1>
         <p>${story[0].body}</p> 
       </div>
       <button class='publish' value = "submit"> Publish 🔐 </i> </button>
-      <button class='contribute'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>
     `);
   return $story;
 };
@@ -127,25 +126,25 @@ $(() => {
   const button2 = `<button class='contri'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>`
   $("body").append(button2);
 
-  const currentwork = document.location.href.split("/")
-  if(currentwork.length > 4) {
+  const currentwork = document.location.href[document.location.href.length-1]
+  if(currentwork) {
     console.log(currentwork);
-    console.log("current work id is",currentwork[4]);
-    loadSpecific(currentwork[4]);
+    console.log("current work id is",currentwork);
+    loadSpecific(currentwork);
   }
 
-  //this was .main-div
-   $(".story").click(function (event) {
-    event.preventDefault();
-    loadStories();
-  });
+  // //this was .main-div
+  //  $(".story").click(function (event) {
+  //   event.preventDefault();
+  //   loadStories();
+  // });
 
 
   $(".contribution-button").click(function (event) {
-    // console.log("contribution", loadContr())
+    const currentwork = document.location.href[document.location.href.length-1]
     $('.contributions').empty();
     event.preventDefault();
-    loadContr(currentwork[4]);
+    loadContr(currentwork);
   });
 
 
@@ -155,13 +154,15 @@ $(() => {
   })
 
   $(".contribute").click(function (event){
+    const currentwork = document.location.href[document.location.href.length-1]
+
     event.preventDefault();
-    contribute(currentwork[4]);
+    contribute(currentwork);
   })
 
   //outside of main-div which works.
   $('.contri').on( 'click',function (event) {
-    window.location.replace(`/create/${currentwork[4]}`);
+    window.location.replace(`/create/${currentwork}`);
 
   })
 

@@ -34,7 +34,7 @@ const getStoriesById = (id) => {
   `
   return db.query(queryString, [id])
   .then((res) => {
-    return res.rows[0];
+    return res.rows;//changed here
   })
   .catch((err) => console.log("getStoriesById ERROR", err));
 }
@@ -123,7 +123,7 @@ const addUpvote = (contribution_id, user_id) => {
 
 const getUpvotes = (contribution_id) => {
   const queryString = `
-  SELECT count(*) FROM upVotes
+  SELECT count(*) FROM upVotes as upVote
   WHERE contribution_id = $1;`
   return db.query(queryString, [contribution_id])
 };

@@ -33,8 +33,10 @@ $(() => {
         $(".main-div").empty();
         $(".main-div").append("<h1>Story not found!</h1>");
       } else {
-        $(".main-div").empty();
-        renderStory(res);
+        window.location.assign(`/readStory/${val}`);
+  
+        // $(".main-div").empty();
+        // renderStory(res);
       }
     });
   });

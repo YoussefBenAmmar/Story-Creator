@@ -6,7 +6,7 @@ const { getStories, getStoriesById, addStory, completedStories, addContributions
 
 
 router.get("/:id", (req, res) => {
-  getStories()
+  getStoriesById(req.params.id)
     .then((stories) => {
       res.json(stories);
     })
@@ -20,17 +20,6 @@ router.get("/:id", (req, res) => {
   router.post("/:id/publish", (req, res) => {
     res.redirect
   })
-  // router.post('/:id/published', (req, res) => {
-  //   getStories()
-  //   .then((stories) => {
-  //     res.json(stories);
-  //   })
-  //   .catch((err) => console.log("getStories ERROR", err))
-    // publish(req.params.id)
-    //   .then(() => {
-    //     res.redirect('/homepage')
-    //   })
-    //   .catch(err => console.log("publication ERROR", err))
-  // });
+
 
   module.exports = router;
