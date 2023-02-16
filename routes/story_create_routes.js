@@ -19,27 +19,31 @@ router.get("/:id", (req, res) => {
 
 //this part is for posting database to the table...
 router.post('/:id', (req, res) => {  
+  console.log("this is the story create story",)
+  addStory(res).then(
+    datadone => { 
+      res.send({storyid:req.params.id})
+    }
+  )
+})
+
+router.post('/', (req, res) => {  
+  console.log("this is the story create story without id",)
+  addStory(res).then(
+    datadone => { 
+      res.send({storyid:res.user_id})
+    }
+  )
+})
+
+
+router.post('/contribute/:id', (req, res) => {  
   console.log("this is the story create new contribution part",)
-  res.send({});
-  // addStory(res).then(res =>{
-  //   return res.send(res);
-  // });
-
-  // //const obj = {title:"s",body:"someotherstory", id : req.params[0]}
-  // //console.log(obj);
-  // //console.log(req.params,res.params);
-  // //res.send(obj);
-  // //req.session.userid
-  // res.redirect("/login");
-
-  // if (getStoriesById(req.params[0])){
-  //   // add stuffs here as contribution
-  //   //addContributions(res);
-  //   req.session.userid
-  //   res.redirect(`/readStories/${req.params[0]}`)
-  // }
-  // //other wise just add stories.
-
+  addContributions(res).then(
+    datadone => { 
+      res.send({storyid:req.params.id})
+    }
+  )
 })
 
 

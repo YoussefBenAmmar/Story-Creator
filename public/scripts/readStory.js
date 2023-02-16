@@ -2,29 +2,33 @@
 
 
 
-// ------------- MAIN STORY
+// ------------- MAIN STORY ///public button was moved out of the story
 const createStoryElement = function (story) {
   const $story = $(`
       <div class="story">
         <h1>${story[0].title}</h1>
-        <p>${story[0].body}</p>
-        <button class='publish' value = "submit"> Publish 🔐 </i> </button>
+        <p>${story[0].body}</p> 
       </div>
+      <button class='publish' value = "submit"> Publish 🔐 </i> </button>
+      <button class='contribute'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>
     `);
   return $story;
 };
 const renderStoryElements = function (story) {
   console.log("story", story)
+  
 
     const eachStory = createStoryElement(story);
     $(".main-div").append(eachStory);
+    
+
+  
 
 
 };
 
 const loadStories = function () {
   $.get("/api/readStory", function (data) {
-
     renderStoryElements(data);
   });
 };
@@ -69,9 +73,6 @@ for (element of contribution) {
 
 const loadContr = function (id) {
   $.get(`/api/readStoryContr/${id}`, function (data) {
-    // console.log(data);
-    // console.log(data[0].title);
-    // console.log(data[0].message);
     renderContrElements(data);
   });
 
@@ -95,10 +96,23 @@ const publish = function(story_id) {
 }
 
 
+//-------- Contribute
 
+const contribute = function (id){
+  //console.log("contribute button is clicked");
+  window.location.assign(`/create/${id}`);
+  $.post(`/create/${id}`).then(
+    res => {
+      
+    }
+  )
+}
 
 
 $(() => {
+  const button2 = `<button class='contri'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>`
+  $("body").append(button2);
+
   const currentwork = document.location.href.split("/")
   if(currentwork.length > 4) {
     console.log(currentwork);
@@ -106,8 +120,8 @@ $(() => {
     loadSpecific(currentwork[4]);
   }
 
-
-   $(".main-div").click(function (event) {
+  //this was .main-div
+   $(".story").click(function (event) {
     event.preventDefault();
     loadStories();
   });
@@ -122,6 +136,17 @@ $(() => {
 
   $(".publish").click(function (event){
     event.preventDefault();
+
+  })
+
+  $(".contribute").click(function (event){
+    event.preventDefault();
+    contribute(currentwork[4]);
+  })
+
+  //outside of main-div which works.
+  $('.contri').on( 'click',function (event) {
+    window.location.replace(`/create/${currentwork[4]}`);
 
   })
 

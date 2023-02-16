@@ -13,6 +13,9 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log("getStories ERROR", err))
   });
 
+  router.post("/create/:id", (req, res) => {
+    res.redirect(`/create/${req.params.id}`);
+  })
 
   router.post("/:id/publish", (req, res) => {
     res.redirect

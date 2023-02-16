@@ -17,6 +17,7 @@ const getStories = () => {
     .catch((err) => console.log("getStories ERROR", err));
 }
 
+exports.getStories = getStories;
 
 /**
  * @param {*} getStoriesById
@@ -47,7 +48,7 @@ exports.getStoriesById = getStoriesById;
 const addStory = function (story) {
   const queryString = `
   INSERT INTO stories
-    (owner_id, body, title, creation_date, completed, complition_date)
+    (user_id, body, title, creation_date, completed, complition_date)
   VALUES ($1, $2, $3, NOW(), FALSE, NULL)
   RETURNING *;
   `;

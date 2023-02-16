@@ -25,6 +25,7 @@ $(document).ready(() => {
   //checks to see if the url has story id, if it does that means its a contribution
   if (oldwork.length > 4) {
     console.log("oldwork length target ", oldwork[4])
+    console.log(oldwork);
     $.get(`/api/readStory/${oldwork[4]}`)
       .then(res => {
         console.log(res);
@@ -38,33 +39,27 @@ $(document).ready(() => {
   //this is the submit form. where we send what we have to the database
   $("#writingform").on('submit', function (event) {
     event.preventDefault();
-    console.log("abc");
     const data = $(this).serialize();
+    data['user_id'] = 1;
     //data['user_id'] = cookieSession.user_id;
     console.log(data);
 
     //if the url contains id, then submit as contribution
-    // if (oldwork.length > 4) {
-    //   $.post(`/create/${oldwork[4]}`, data)
-    //   .then(res => {
-    //     // should be window.location.href = "/read/${oldwork}"
-    //     //window.location.href = res.redirect;
-    //     console.log(res);
-    //   })
-    // } else {
-      
-    // }
-
+    if (oldwork.length > 3) {
+      $.post(`/create/contribute/${oldwork[4]}`, data)
+      .then(res => {
+        data['completed'] = false;
+        console.log(res.url);
+        window.location.assign(`/readStory/${res.storyid}`)
+      })
+    } else {
     //submit it as a new work from the story_create_routes
-    data['completed'] = false;
-    $.post(`/create/${oldwork}`, data)
+    $.post(`/create`, data)
     .then(res => {
-      //should be window.location.href = "/read/${newwork}"
-      //window.location.href = "/login";
-      window.location.assign(`/readStory/${oldwork}`)
-      //console.log(res);
-    })
-
+      data['completed'] = false;
+      console.log(res.url);
+      window.location.assign(`/readStory/${res.storyid}`)
+    })}
   })
 
   //shows previous entry
