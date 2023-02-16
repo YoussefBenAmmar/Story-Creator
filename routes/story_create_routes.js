@@ -29,9 +29,9 @@ router.post('/:id', (req, res) => {
 
 router.post('/', (req, res) => {  
   console.log("this is the story create story without id",)
-  addStory(res).then(
+  addStory(databack).then(
     datadone => { 
-      res.send({storyid:res.user_id})
+      res.send({storyid:databack.user_id})
     }
   )
 })
