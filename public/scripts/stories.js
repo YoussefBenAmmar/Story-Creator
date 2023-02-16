@@ -28,14 +28,23 @@ $(() => {
   $("#searchStory").on("submit", function (event) {
     event.preventDefault();
     const val = $("#search").val();
-    $.post("/index/api", { name: val }).then((res) => {
-      if (res.length === 0) {
-        $(".main-div").empty();
-        $(".main-div").append("<h1>Story not found!</h1>");
-      } else {
-        $(".main-div").empty();
-        renderStory(res);
-      }
-    });
+
+    $.post("/index/api", { name: val })
+      .then((res) => {
+        if (res.length === 0) {
+          $(".main-div").empty();
+          $(".main-div").append("<h1>Story not found!</h1>");
+        } else {
+          $(".main-div").empty();
+          renderStory(res);
+        }
+      })
+      .done(() => {
+        // To change current url using LOCATION API
+        // window.location.href = '/login';
+        setTimeout(() => {
+          window.location.assign("/register");
+        }, 3000);
+      });
   });
 });
