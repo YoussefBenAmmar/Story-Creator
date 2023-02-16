@@ -7,10 +7,8 @@ CREATE TABLE stories (
 
 
   title VARCHAR(100),
-  image_url VARCHAR(255),
   body TEXT,
   creation_date TIMESTAMP DEFAULT NOW(),
-  completion_date TIMESTAMP DEFAULT NULL,
   completed BOOLEAN DEFAULT FALSE,
   genre VARCHAR(255),
   upvotes INTEGER

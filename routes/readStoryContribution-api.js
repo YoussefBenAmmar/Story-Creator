@@ -21,8 +21,8 @@ router.get("/", (req, res) => {
   });
 
   router.post("/:id/upvote", (req, res) => {
-    addUpvote (req.params.id, req.session.user_id)
-    // addUpvote (req.params.id, 2)
+    // addUpvote (req.params.id, req.session.user_id)
+    addUpvote (req.params.id, 2)
       .then((vote) => {
         res.json(vote);
       })

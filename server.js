@@ -5,6 +5,7 @@ require("dotenv").config();
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
+var path    = require('path');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -30,6 +31,7 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
+const storyApiRoutes = require("./routes/stories-api");
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 const readRoutes = require("./routes/readStory");
@@ -37,19 +39,23 @@ const readStoriesRouteApi = require("./routes/readStories-api");
 const readStoriesContr = require("./routes/readStoryContribution-api");
 
 
+//const registerRoutes = require("./routes/register");
+const storyRoutes = require("./routes/story_create_routes");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use("/api/users", userApiRoutes);
 app.use("/api/widgets", widgetApiRoutes);
+app.use("/api/stories", storyApiRoutes);
 app.use("/users", usersRoutes);
 app.use("/login", loginRoutes);
 app.use("/readStory", readRoutes);
 app.use("/api/readStory", readStoriesRouteApi);
 app.use("/api/readStoryContr", readStoriesContr);
 
-
+//app.use("/register", registerRoutes);
+app.use("/create",storyRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -59,6 +65,9 @@ app.use("/api/readStoryContr", readStoriesContr);
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

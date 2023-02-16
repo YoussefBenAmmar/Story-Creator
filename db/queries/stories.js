@@ -31,7 +31,6 @@ const getStoriesById = (id) => {
   JOIN contributions ON contributions.id = story_id
   WHERE stories.id = $1
   `
-
   return db.query(queryString, [id])
   .then((res) => {
     return res.rows[0];
@@ -39,6 +38,7 @@ const getStoriesById = (id) => {
   .catch((err) => console.log("getStoriesById ERROR", err));
 }
 
+exports.getStoriesById = getStoriesById;
 
 /**
  * @param {*} addStory
@@ -47,18 +47,20 @@ const getStoriesById = (id) => {
 const addStory = function (story) {
   const queryString = `
   INSERT INTO stories
-    (user_id, body, title, image_url, creation_date, completed, complition_date)
-  VALUES ($1, $2, $3, $4, NOW(), FALSE, NULL)
+    (owner_id, body, title, creation_date, completed, complition_date)
+  VALUES ($1, $2, $3, NOW(), FALSE, NULL)
   RETURNING *;
   `;
 
-  const values = [story.user_id, story.body, story.title, story.image_url]
+  const values = [story.owner_id, story.body, story.title]
   return db.query(queryString, values)
     .then(res => {
       return res.rows[0];
     })
     .catch((err) => console.log("addStory ERROR", err));
 }
+
+exports.addStory = addStory;
 
 /**
  * @param {*} completedStories
@@ -76,14 +78,14 @@ const completedStories = (story_id) => {
  */
 const getContributions = (id) => {
   const queryString = `
-    SELECT stories.id, stories.title, contributions.message, contributions.accepted,
-    contributions.id, users.name, count(upVotes.contribution_id) as upVote
+    SELECT stories.id, stories.title, stories.body, contributions.message, contributions.accepted,
+    contributions.id, users.name, count(upVotes.contribution_id)
     FROM contributions
-    JOIN users ON users.id = user_id
+    JOIN users ON users.id = contributor_id
     RIGHT JOIN stories ON stories.id=story_id
     FULL OUTER JOIN upVotes ON contributions.id = contribution_id
     WHERE stories.id = $1
-    GROUP BY upVotes.contribution_id, stories.id, stories.title,
+    GROUP BY upVotes.contribution_id, stories.id, stories.title, stories.body,
     contributions.message, contributions.accepted, users.name, contributions.id
     ORDER BY contributions.accepted;
   `
@@ -131,4 +133,5 @@ const publish = (story_id) => {
   return db.query(queryString, [story_id])
 }
 
-module.exports = { getStories, getStoriesById, addStory, getContributions, completedStories, addContributions, addUpvote, getUpvotes, publish }
+
+module.exports = { getStories, getStoriesById, addStory, completedStories, addContributions, addUpvote, getUpvotes, publish }
