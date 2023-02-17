@@ -135,6 +135,21 @@ const getUpvotes = (contribution_id) => {
   return db.query(queryString, [contribution_id]);
 };
 
+const acceptContribution = (contribution_id) => {
+  const queryString = `
+
+UPDATE stories
+SET body = (select concat(a.body, b.message)
+from contributions b
+join stories a
+on a.id = b.story_id
+where b.id = $1)
+where id = (select story_id from contributions where id = $1)
+
+`;
+  return db.query(queryString, [contribution_id]);
+};
+
 const publish = (story_id) => {
   const queryString = `UPDATE stories SET completed = TRUE WHERE id = $1;`;
   return db.query(queryString, [story_id]);
@@ -150,4 +165,5 @@ module.exports = {
   addUpvote,
   getUpvotes,
   publish,
+  acceptContribution,
 };

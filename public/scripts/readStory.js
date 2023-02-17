@@ -40,9 +40,10 @@ const createContrElement = function (contrObj) {
         <p>${contrObj.message}</p>
         <p id='upvote_${contrObj.id}'>${contrObj.upvote}</p>
         <button class='upButton'  value="submit" data-attribute-upvoteid='${contrObj.id}' > upvote 🆙 </i> </button>
-        <button class='accept' value = "submit"> Accept Contribution ✅ </i> </button>
+        <button class='accept' value = "submit" data-contr-id='${contrObj.id}'> Accept Contribution ✅ </i> </button>
       </div>
     `);
+
   return $contribution;
 };
 
@@ -58,6 +59,16 @@ const renderContrElements = function (contribution) {
     event.preventDefault();
     const id = $(event.target).attr("data-attribute-upvoteid");
     vote(id);
+  });
+
+  $(".accept").on("click", function (event) {
+    event.preventDefault();
+    const id = $(event.target).attr("data-contr-id");
+
+    $.post(`/api/readStoryContr/acceptContribution/${id}`).then(() => {
+      //window.location.assign(`/readStroy/${currentwork1}`);
+      location.reload();
+    });
   });
 };
 
@@ -76,17 +87,17 @@ const vote = function (id) {
       $(`#upvote_${id}`).text(data.rows[0].count);
     });
   });
-
-  // $.post(`/api/readStoryContr/${id}/upvote`).then(
-  //   res =>{
-  //     $.get(`/api/readStoryContr/${id}/upvote`).then(
-  //       data=>{
-  //         $(`#upvote_${id}`).text(data.upvote);
-  //       }
-  //     )
-  //   }
-  // )
 };
+
+// $.post(`/api/readStoryContr/${id}/upvote`).then(
+//   res =>{
+//     $.get(`/api/readStoryContr/${id}/upvote`).then(
+//       data=>{
+//         $(`#upvote_${id}`).text(data.upvote);
+//       }
+//     )
+//   }
+// )
 
 // ------------- PUBLISH
 
@@ -105,6 +116,7 @@ const contribute = function (id) {
 };
 
 $(() => {
+  console.log("cookie", document.cookie);
   const button2 = `<button class='contri'  value="submit"  > Click Here to Add Contribution ➕ </i> </button>`;
   $("body").append(button2);
 
@@ -121,12 +133,12 @@ $(() => {
   //   loadStories();
   // });
 
-  $(".contribution-button").click(function (event) {
-    const currentwork = document.location.pathname.split("/")[2];
-    $(".contributions").empty();
-    event.preventDefault();
-    loadContr(currentwork);
-  });
+  //  $(".contribution-button").click(function (event) {
+  const currentwork1 = document.location.pathname.split("/")[2];
+  // $(".contributions").empty();
+  // event.preventDefault();
+  loadContr(currentwork1);
+  //  });
 
   $(".publish").click(function (event) {
     event.preventDefault();
@@ -143,5 +155,21 @@ $(() => {
   //outside of main-div which works.
   $(".contri").on("click", function (event) {
     window.location.replace(`/create/${currentwork}`);
+  });
+  $.post("/readStory/session").then((res) => {
+    if (res.id) {
+      console.log("hello this is consol", res);
+      $(".publish").hide();
+      $(".contribute").hide();
+      $(".publish").remove();
+      $(".accept").hide();
+      // window.location.replace("/login");
+    } else {
+      $(".publish").hide();
+      $(".contribute").hide();
+      $(".publish").remove();
+      $(".accept").hide();
+      // window.location.replace("/");
+    }
   });
 });

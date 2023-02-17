@@ -46,6 +46,7 @@ const loginRoutes = require("./routes/login");
 const readRoutes = require("./routes/readStory");
 const readStoriesRouteApi = require("./routes/readStories-api");
 const readStoriesContr = require("./routes/readStoryContribution-api");
+// const acceptContribution = require("./routes/readStoryContribution-api");
 
 //const registerRoutes = require("./routes/register");
 const storyRoutes = require("./routes/story_create_routes");
@@ -65,6 +66,7 @@ app.use("/login", loginRoutes);
 app.use("/readStory", readRoutes);
 app.use("/api/readStory", readStoriesRouteApi);
 app.use("/api/readStoryContr", readStoriesContr);
+// app.use("`/acceptContribution`", acceptContribution);
 
 //app.use("/register", registerRoutes);
 app.use("/create", storyRoutes);

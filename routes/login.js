@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   getUserByEmail(req.body.email).then((user) => {
     req.session.user_id = user.id;
     res.redirect("/");
