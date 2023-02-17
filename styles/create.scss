@@ -4,26 +4,23 @@ body {
   justify-items: center;
 }
 
-p#oldentry{
+p#oldentry {
   border-style: groove;
 }
 
-textarea{
-  height:60rem;
+textarea {
+  height: 60rem;
   background-color: transparent;
 }
 
-#info{
+#info {
   display: flex;
   flex-direction: column;
   justify-items: center;
 }
 
-
-
-#writingform{
+#writingform {
   width: 95%;
-  
 }
 
 #submitbtn {

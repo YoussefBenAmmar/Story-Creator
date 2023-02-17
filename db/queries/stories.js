@@ -26,7 +26,7 @@ exports.getStories = getStories;
 const getStoriesById = (id) => {
   const queryString = `
   SELECT stories.*, users.name, contributions.message,
-  contributions.accepted
+  contributions.accepted , stories.completed
   FROM stories
  left JOIN users ON users.id = stories.user_id
   left JOIN contributions ON contributions.story_id = stories.id
@@ -34,6 +34,22 @@ const getStoriesById = (id) => {
   `;
   return db
     .query(queryString, [id])
+    .then((res) => {
+      return res.rows; //changed here
+    })
+    .catch((err) => console.log("getStoriesById ERROR", err));
+};
+const getStoriesByName = (name) => {
+  const queryString = `
+  SELECT stories.*, users.name, contributions.message,
+  contributions.accepted , stories.completed
+  FROM stories
+ left JOIN users ON users.id = stories.user_id
+  left JOIN contributions ON contributions.story_id = stories.id
+  WHERE stories.title = $1
+  `;
+  return db
+    .query(queryString, [name])
     .then((res) => {
       return res.rows; //changed here
     })
@@ -166,4 +182,5 @@ module.exports = {
   getUpvotes,
   publish,
   acceptContribution,
+  getStoriesByName,
 };

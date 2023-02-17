@@ -1,9 +1,9 @@
 const createStoryElement = function (storyObj) {
   const $story = $(`
       <div class="each-story">
-        <h1>${storyObj.id}</h1>
+        <h1>${storyObj.id}: ${storyObj.title}</h1>
         <p>${storyObj.body}</p>
-        <p>${storyObj.completed}</p>
+        <p>Published: ${storyObj.completed}</p>
       </div>
     `);
   return $story;
@@ -29,6 +29,10 @@ $(() => {
   $("#loginButton").click(function (event) {
     event.preventDefault;
     window.location.assign(`/login`);
+  });
+  $("#createButton").click(function (event) {
+    event.preventDefault;
+    window.location.assign(`/create`);
   });
   $("#searchStory").on("submit", function (event) {
     event.preventDefault();

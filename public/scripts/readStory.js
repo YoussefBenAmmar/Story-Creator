@@ -4,8 +4,9 @@
 const createStoryElement = function (story) {
   const $story = $(`
       <div class="story">
-        <h1>${story[0].title}</h1>
+        <h1>${story[0].id}: ${story[0].title}</h1>
         <p>${story[0].body}</p>
+        <p class = 'completed'>Published: ${story[0].completed}</p>
       </div>
       <button id = 'publish' class='publish' value = "submit" data-attr-publish='${story[0].id}'> Publish 🔐 </i> </button>
     `);
@@ -27,6 +28,15 @@ const loadStories = function () {
 const loadSpecific = function (id) {
   $.get(`/api/readStory/${id}`, function (data) {
     renderStoryElements(data);
+  }).then((res) => {
+    console.log(res);
+    if (res[0].completed) {
+      setTimeout(() => {
+        $(".publish").hide();
+        $(".contri").hide();
+        $(".accept").hide();
+      }, 30);
+    }
   });
 };
 
@@ -173,6 +183,16 @@ $(() => {
       }, 30);
       // window.location.replace("/login");
     } // window.location.replace("/");
+  });
+
+  $.get(`/api/readStory/${currentwork1}`).then((res) => {
+    if (res.completed) {
+      setTimeout(() => {
+        $(".publish").hide();
+        $(".contri").hide();
+        $(".accept").hide();
+      }, 30);
+    }
   });
 
   $(document).on("click", ".publish", function (event) {

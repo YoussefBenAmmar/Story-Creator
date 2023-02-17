@@ -40,14 +40,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <button class="btn btn-outline-warning" type="submit">home</button>
             <li class="nav-item">
-              <button class="btn btn-outline-warning" type="submit">
-                login
-              </button>
+              <a href="http://localhost:8080" class="btn btn-outline-warning"
+                >Home</a
+              >
+              <a
+                href="http://localhost:8080/login"
+                class="btn btn-outline-warning"
+                >login</a
+              >
+            </li>
+            <li class="nav-item">
+              <!-- <button id="createButton" class="btn btn-outline-warning" type="submit">
+                creater
+              </button> -->
+
+              <a
+                href="http://localhost:8080/create"
+                class="btn btn-outline-warning"
+                >create</a
+              >
             </li>
           </ul>
-          <form class="d-flex"></form>
+          <form id="searchStory" class="d-flex">
+            <input
+              id="search"
+              class="form-control me-2"
+              placeholder="search by ID"
+            />
+            <input
+              class="btn btn-outline-success"
+              type="submit"
+              value="Submit"
+            />
+          </form>
         </div>
       </div>
     </nav>
