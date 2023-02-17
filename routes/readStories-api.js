@@ -23,7 +23,7 @@ router.post("/create/:id", (req, res) => {
   res.redirect(`/create/${req.params.id}`);
 });
 
-router.post("/:id/publish", (req, res) => {
+router.post("/publish/:id", (req, res) => {
   completedStories(req.params.id)
     .then((res) => {
       res.redirect(`publish/${req.params.id}`);

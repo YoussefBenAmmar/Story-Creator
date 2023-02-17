@@ -70,7 +70,7 @@ exports.addStory = addStory;
  * @returns Promise switching BOOLEAN to TRUE
  */
 const completedStories = (story_id) => {
-  const queryString = `UPDATE stories SET published = TRUE WHERE id = $1`;
+  const queryString = `UPDATE stories SET completed = TRUE WHERE id = $1`;
   return db.query(queryString, [story_id]);
 };
 

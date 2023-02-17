@@ -7,7 +7,7 @@ const createStoryElement = function (story) {
         <h1>${story[0].title}</h1>
         <p>${story[0].body}</p>
       </div>
-      <button class='publish' value = "submit"> Publish 🔐 </i> </button>
+      <button id = 'publish' class='publish' value = "submit" data-attr-publish='${story[0].id}'> Publish 🔐 </i> </button>
     `);
   return $story;
 };
@@ -101,11 +101,11 @@ const vote = function (id) {
 
 // ------------- PUBLISH
 
-const publish = function (story_id) {
-  $.post(`${story_id}/publish`).then((res) => {
-    window.location.assign(`/publish/${story_id}`);
-  });
-};
+// const publish = function (story_id) {
+//   $.post(`/publish`).then((res) => {
+//     window.location.assign(`/publish/${story_id}`);
+//   });
+// };
 
 //-------- Contribute
 
@@ -140,9 +140,15 @@ $(() => {
   loadContr(currentwork1);
   //  });
 
-  $(".publish").click(function (event) {
-    event.preventDefault();
-  });
+  // $.post(`/api/readStory/publish/${currentwork1}`).then((res) => {
+  //   window.location.replace(`readStory/${currentwork1}`);
+  // });
+  // });
+
+  // $(".upButton").click(function (event) {
+  //   event.preventDefault();
+  //   const id = $(event.target).attr("data-attribute-upvoteid");
+  //   vote(id);
 
   $(".contribute").click(function (event) {
     const currentwork =
@@ -156,20 +162,25 @@ $(() => {
   $(".contri").on("click", function (event) {
     window.location.replace(`/create/${currentwork}`);
   });
+
   $.post("/readStory/session").then((res) => {
-    if (res.id) {
+    if (!res.id) {
       console.log("hello this is consol", res);
-      $(".publish").hide();
-      $(".contribute").hide();
-      $(".publish").remove();
-      $(".accept").hide();
+      setTimeout(() => {
+        $(".publish").hide();
+        $(".contri").hide();
+        $(".accept").hide();
+      }, 30);
       // window.location.replace("/login");
-    } else {
-      $(".publish").hide();
-      $(".contribute").hide();
-      $(".publish").remove();
-      $(".accept").hide();
-      // window.location.replace("/");
-    }
+    } // window.location.replace("/");
+  });
+
+  $(document).on("click", ".publish", function (event) {
+    console.log("publish has been clicked", event);
+    const id = $(event.target).attr("data-attr-publish");
+    $.post(`/api/readStory/publish/${id}`).then(() => {
+      // window.location.assign(`/readStroy/${currentwork1}`);
+      // location.reload();
+    });
   });
 });
