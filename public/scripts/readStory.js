@@ -200,7 +200,7 @@ $(() => {
     const id = $(event.target).attr("data-attr-publish");
     $.post(`/api/readStory/publish/${id}`).then(() => {
       // window.location.assign(`/readStroy/${currentwork1}`);
-      // location.reload();
+      location.reload();
     });
   });
 });

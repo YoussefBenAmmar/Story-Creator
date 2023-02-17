@@ -9,9 +9,9 @@ CREATE TABLE contributions (
   -- upvote INTEGER NOT NULL,
   -- downvote INTEGER NOT NULL
   id SERIAL PRIMARY KEY NOT NULL,
-  message TEXT NOT NULL,
+  message TEXT,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
   accepted BOOLEAN,
-  upvote INTEGER DEFAULT 0 NOT NULL
+  upvote INTEGER DEFAULT 0
 );
